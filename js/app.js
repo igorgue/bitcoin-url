@@ -2,8 +2,12 @@ window.BtcToMe = {}
 
 BtcToMe.params = null
 
-BtcToMe.getAddressFromUri = function (uri) {
-    return uri
+BtcToMe.getUriParams = function (value) {
+    return new URLSearchParams(value.split("?")[1])
+}
+
+BtcToMe.getAddressFromUri = function (value) {
+    return value
         .split("?")[0]
         .replace("bitcoin://", "")
         .replace("bitcoin:", "")
@@ -33,16 +37,16 @@ BtcToMe.setQRCode = function (value) {
 }
 
 BtcToMe.setAmountInput = function (value) {
-    var bitcoinUrlParams = new URLSearchParams(value.split("?")[1])
-    var amount = bitcoinUrlParams.get("amount")
+    var uriParams = this.getUriParams(value)
+    var amount = uriParams.get("amount")
     var amountEl = document.getElementById("amount")
 
     amountEl.value = amount
 }
 
 BtcToMe.setMessage = function (value) {
-    var bitcoinUrlParams = new URLSearchParams(value.split("?")[1])
-    var message = bitcoinUrlParams.get("message")
+    var uriParams = this.getUriParams(value)
+    var message = uriParams.get("message")
     var messageEl = document.getElementById("message")
 
     messageEl.innerHTML = message
